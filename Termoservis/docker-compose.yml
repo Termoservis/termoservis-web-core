@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  termoservis:
+    image: termoservis
+    build:
+      context: ./Termoservis
+      dockerfile: Dockerfile

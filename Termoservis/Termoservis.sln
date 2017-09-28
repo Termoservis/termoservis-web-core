@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26923.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Termoservis", "Termoservis\Termoservis.csproj", "{95D6E2CC-6E91-40DD-ABCC-40B0C78A0C0E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F75BE4E1-9802-4327-9B81-951A2C576B8D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95D6E2CC-6E91-40DD-ABCC-40B0C78A0C0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95D6E2CC-6E91-40DD-ABCC-40B0C78A0C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95D6E2CC-6E91-40DD-ABCC-40B0C78A0C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95D6E2CC-6E91-40DD-ABCC-40B0C78A0C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F75BE4E1-9802-4327-9B81-951A2C576B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F75BE4E1-9802-4327-9B81-951A2C576B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F75BE4E1-9802-4327-9B81-951A2C576B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F75BE4E1-9802-4327-9B81-951A2C576B8D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B74F07E1-E824-47CD-B7BE-1B5210B7F8E7}
+	EndGlobalSection
+EndGlobal
