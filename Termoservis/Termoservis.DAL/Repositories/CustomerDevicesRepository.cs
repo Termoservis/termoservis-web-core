@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Termoservis.Models;
 
 namespace Termoservis.DAL.Repositories
@@ -19,19 +20,16 @@ namespace Termoservis.DAL.Repositories
         /// Initializes a new instance of the <see cref="CustomerDevicesRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="loggingService">The logging service.</param>
+        /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">
         /// context
         /// or
-        /// loggingService
+        /// logger
         /// </exception>
-        public CustomerDevicesRepository(ApplicationDbContext context, ILoggingService loggingService)
+        public CustomerDevicesRepository(ApplicationDbContext context, ILogger<CustomerDevicesRepository> logger)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
-            if (loggingService == null) throw new ArgumentNullException(nameof(loggingService));
-
-            this.context = context;
-            this.logger = loggingService.GetLogger<CustomerDevicesRepository>();
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
 
@@ -80,7 +78,7 @@ namespace Termoservis.DAL.Repositories
             this.context.CustomerDevices.Add(model);
             await this.context.SaveChangesAsync();
 
-            this.logger.Information(
+            this.logger.LogInformation(
                 "Added new customer device {CustomerDeviceName} ({CustomerDeviceId}).",
                 model.Name, model.Id);
 

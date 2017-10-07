@@ -10,13 +10,21 @@ namespace Termoservis.DAL
 	/// <seealso cref="ApplicationUser" />
 	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	{
-		/// <summary>
-		/// Gets or sets the addresses.
-		/// </summary>
-		/// <value>
-		/// The addresses.
-		/// </value>
-		public DbSet<Address> Addresses { get; set; }
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+        }
+
+        protected ApplicationDbContext()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the addresses.
+        /// </summary>
+        /// <value>
+        /// The addresses.
+        /// </value>
+        public DbSet<Address> Addresses { get; set; }
 
 		/// <summary>
 		/// Gets or sets the countries.

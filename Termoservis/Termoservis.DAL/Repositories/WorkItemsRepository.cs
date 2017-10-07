@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Termoservis.Models;
 
 namespace Termoservis.DAL.Repositories
@@ -12,26 +13,23 @@ namespace Termoservis.DAL.Repositories
     public class WorkItemsRepository : IWorkItemsRepository
     {
         private readonly ApplicationDbContext context;
-        private readonly ILogger logger;
+        private readonly ILogger<WorkItemsRepository> logger;
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkItemsRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="loggingService">The logging service.</param>
+        /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">
         /// context
         /// or
-        /// loggingService
+        /// logger
         /// </exception>
-        public WorkItemsRepository(ApplicationDbContext context, ILoggingService loggingService)
+        public WorkItemsRepository(ApplicationDbContext context, ILogger<WorkItemsRepository> logger)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
-            if (loggingService == null) throw new ArgumentNullException(nameof(loggingService));
-
-            this.context = context;
-            this.logger = loggingService.GetLogger<WorkItemsRepository>();
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
 
@@ -82,7 +80,7 @@ namespace Termoservis.DAL.Repositories
             this.context.WorkItems.Add(model);
             await this.context.SaveChangesAsync();
 
-            this.logger.Information(
+            this.logger.LogInformation(
                 "Added new work item ({WorkItemId}).",
                 model.Id);
 
@@ -135,7 +133,7 @@ namespace Termoservis.DAL.Repositories
             // Save context changes
             await this.context.SaveChangesAsync();
 
-            this.logger?.Information(
+            this.logger.LogInformation(
                 "Edited WorkItem ({WorkItemId}) for customer ({CustomerId})",
                 workItemDb.Id,
                 workItemDb.CustomerId);
@@ -183,7 +181,7 @@ namespace Termoservis.DAL.Repositories
             // Save context changes
             await this.context.SaveChangesAsync();
 
-            this.logger?.Information(
+            this.logger.LogInformation(
                 "Deleted WorkItem ({WorkItemId}) for customer ({CustomerId})",
                 model.Id,
                 model.CustomerId);

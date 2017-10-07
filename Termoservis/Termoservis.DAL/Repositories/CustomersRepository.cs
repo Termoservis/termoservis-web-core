@@ -3,7 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Termoservis.Common.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Termoservis.Libs.Extensions;
 using Termoservis.Models;
 
 namespace Termoservis.DAL.Repositories
@@ -14,28 +16,25 @@ namespace Termoservis.DAL.Repositories
     public class CustomersRepository : ICustomersRepository
     {
         private readonly ApplicationDbContext context;
-        private readonly ILogger logger;
+        private readonly ILogger<CustomersRepository> logger;
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomersRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="loggingService">The logging service.</param>
+        /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">
         /// context
         /// or
-        /// loggingService
+        /// logger
         /// </exception>
         public CustomersRepository(
             ApplicationDbContext context,
-            ILoggingService loggingService)
+            ILogger<CustomersRepository> logger)
         {
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
-
-            this.context = context;
-            this.logger = loggingService?.GetLogger<CustomersRepository>();
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
 
@@ -126,7 +125,7 @@ namespace Termoservis.DAL.Repositories
             if (shouldSaveChanges)
                 await this.context.SaveChangesAsync();
 
-            this.logger?.Information(
+            this.logger.LogInformation(
                 "Added new {CustomerName} ({CustomerId})",
                 model.Name, model.Id);
 
@@ -181,7 +180,7 @@ namespace Termoservis.DAL.Repositories
             // Save context changes
             await this.context.SaveChangesAsync();
 
-            this.logger?.Information(
+            this.logger.LogInformation(
                 "Edited customer {CustomerName} ({CustomerId})", 
                 customerDb.Name, customerDb.Id);
 

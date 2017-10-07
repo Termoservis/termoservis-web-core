@@ -2,7 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Termoservis.Common.Extensions;
+using Microsoft.Extensions.Logging;
+using Termoservis.Libs.Extensions;
 using Termoservis.Models;
 
 namespace Termoservis.DAL.Repositories
@@ -14,32 +15,27 @@ namespace Termoservis.DAL.Repositories
 	{
 		private readonly ApplicationDbContext context;
 		private readonly IPlacesRepository placesRepository;
-		private readonly ILogger logger;
+		private readonly ILogger<AddressesRepository> logger;
 
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="AddressesRepository"/> class.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		/// <param name="placesRepository">The places repository.</param>
-		/// <param name="loggingService">The logging service.</param>
-		/// <exception cref="ArgumentNullException">
-		/// context
-		/// or
-		/// placesRepository
-		/// or
-		/// loggingService
-		/// </exception>
-		public AddressesRepository(ApplicationDbContext context, IPlacesRepository placesRepository, ILoggingService loggingService)
+	    /// <summary>
+	    /// Initializes a new instance of the <see cref="AddressesRepository"/> class.
+	    /// </summary>
+	    /// <param name="context">The context.</param>
+	    /// <param name="placesRepository">The places repository.</param>
+	    /// <param name="logger">The logger.</param>
+	    /// <exception cref="ArgumentNullException">
+	    /// context
+	    /// or
+	    /// placesRepository
+	    /// or
+	    /// logger
+	    /// </exception>
+	    public AddressesRepository(ApplicationDbContext context, IPlacesRepository placesRepository, ILogger<AddressesRepository> logger)
 		{
-			if (context == null)
-				throw new ArgumentNullException(nameof(context));
-			if (placesRepository == null)
-				throw new ArgumentNullException(nameof(placesRepository));
-
-			this.context = context;
-			this.placesRepository = placesRepository;
-			this.logger = loggingService?.GetLogger<AddressesRepository>();
+		    this.context = context ?? throw new ArgumentNullException(nameof(context));
+			this.placesRepository = placesRepository ?? throw new ArgumentNullException(nameof(placesRepository));
+		    this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
 
@@ -99,9 +95,7 @@ namespace Termoservis.DAL.Repositories
             this.context.Addresses.Add(model);
 			await this.context.SaveChangesAsync();
 
-			this.logger?.Information(
-				"Added new address {StreetAddress} ({AddressId}) to Place ({PlaceId}).",
-				model.StreetAddress, model.Id, model.PlaceId);
+		    this.logger.LogInformation($"Added new address {model.StreetAddress} ({model.Id}) to Place ({model.PlaceId}).");
 
 			return model;
 		}

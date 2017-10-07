@@ -1,7 +1,7 @@
 ﻿using System;
 using Termoservis.Contracts.Repository;
 
-namespace Termoservis.Common.Extensions
+namespace Termoservis.Libs.Extensions
 {
 	/// <summary>
 	/// The <see cref="IRetrieveRepository{TModel, TModelIdentifier}"/> extensions.

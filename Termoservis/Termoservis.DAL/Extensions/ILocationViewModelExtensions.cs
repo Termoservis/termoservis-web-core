@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Termoservis.DAL.ViewModels;
 
 namespace Termoservis.DAL.Extensions
@@ -16,7 +16,7 @@ namespace Termoservis.DAL.Extensions
 		/// </summary>
 		/// <param name="viewModel">The view model.</param>
 		/// <param name="context">The context.</param>
-		/// <exception cref="System.ArgumentNullException">
+		/// <exception cref="ArgumentNullException">
 		/// viewModel
 		/// or
 		/// context

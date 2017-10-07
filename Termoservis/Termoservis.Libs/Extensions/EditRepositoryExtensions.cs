@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Termoservis.Contracts.Repository;
 
-namespace Termoservis.Common.Extensions
+namespace Termoservis.Libs.Extensions
 {
 	/// <summary>
 	/// The <see cref="IEditRepository{TModel,TModelIdentifier}"/> extensions.

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Termoservis.Models;
 
 namespace Termoservis.DAL.Repositories
@@ -13,30 +14,25 @@ namespace Termoservis.DAL.Repositories
 	public class TelephoneNumbersRepository : ITelephoneNumbersRepository
 	{
 		private readonly ApplicationDbContext context;
-		private readonly ILogger logger;
+		private readonly ILogger<TelephoneNumbersRepository> logger;
 
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TelephoneNumbersRepository"/> class.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		/// <param name="loggingService">The logging service.</param>
-		/// <exception cref="ArgumentNullException">
-		/// context
-		/// or
-		/// loggingService
-		/// </exception>
-		public TelephoneNumbersRepository(
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TelephoneNumbersRepository"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="logger">The logger.</param>
+        /// <exception cref="ArgumentNullException">
+        /// context
+        /// or
+        /// logger
+        /// </exception>
+        public TelephoneNumbersRepository(
 			ApplicationDbContext context,
-			ILoggingService loggingService)
+			ILogger<TelephoneNumbersRepository> logger)
 		{
-			if (context == null)
-				throw new ArgumentNullException(nameof(context));
-			if (loggingService == null)
-				throw new ArgumentNullException(nameof(loggingService));
-
-			this.context = context;
-			this.logger = loggingService.GetLogger<TelephoneNumbersRepository>();
+		    this.context = context ?? throw new ArgumentNullException(nameof(context));
+			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
 
@@ -101,7 +97,7 @@ namespace Termoservis.DAL.Repositories
 			this.context.TelephoneNumbers.Add(model);
 			await this.context.SaveChangesAsync();
 
-			this.logger.Information(
+			this.logger.LogInformation(
 				"Added new telephone number {TelephoneNumber}", 
 				model.Number);
 
@@ -136,7 +132,7 @@ namespace Termoservis.DAL.Repositories
             telephoneNumberDb.Number = model.Number;
             await this.context.SaveChangesAsync();
 
-            this.logger.Information(
+            this.logger.LogInformation(
                 "Edited telephone number {TelephoneNumber} ({TelephoneNumberId})",
                 telephoneNumberDb.Number, telephoneNumberDb.Id);
 
@@ -205,7 +201,7 @@ namespace Termoservis.DAL.Repositories
 
             try
 	        {
-                this.logger.Information("Deleting telephone number {TelephoneNumber} ({TelephoneNumberId})...", model.Number, model.Id);
+                this.logger.LogInformation("Deleting telephone number {TelephoneNumber} ({TelephoneNumberId})...", model.Number, model.Id);
 
 	            this.context.TelephoneNumbers.Remove(model);
 	            await this.context.SaveChangesAsync();
@@ -213,6 +209,7 @@ namespace Termoservis.DAL.Repositories
 	        }
 	        catch (Exception)
 	        {
+                // TODO: Log
 	            return false;
 	        }
 	    }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Termoservis.Models;
 
 namespace Termoservis.DAL.Repositories
@@ -13,26 +14,23 @@ namespace Termoservis.DAL.Repositories
 	public class CountriesRepository : ICountriesRepository
 	{
 		private readonly ApplicationDbContext context;
-		private readonly ILogger logger;
+		private readonly ILogger<CountriesRepository> logger;
 
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CountriesRepository"/> class.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		/// <param name="loggingService">The logging service.</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// context
-		/// or
-		/// loggingService
-		/// </exception>
-		public CountriesRepository(ApplicationDbContext context, ILoggingService loggingService)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CountriesRepository"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="logger">The logger.</param>
+        /// <exception cref="ArgumentNullException">
+        /// context
+        /// or
+        /// logger
+        /// </exception>
+        public CountriesRepository(ApplicationDbContext context, ILogger<CountriesRepository> logger)
 		{
-			if (context == null) throw new ArgumentNullException(nameof(context));
-			if (loggingService == null) throw new ArgumentNullException(nameof(loggingService));
-
-			this.context = context;
-			this.logger = loggingService.GetLogger<CountriesRepository>();
+		    this.context = context ?? throw new ArgumentNullException(nameof(context));
+			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
 
@@ -72,7 +70,7 @@ namespace Termoservis.DAL.Repositories
 			this.context.Countries.Add(model);
 			await this.context.SaveChangesAsync();
 
-			this.logger.Information(
+			this.logger.LogInformation(
 				"Added new country {CountryName} ({CountryId})", 
 				model.Name, model.Id);
 
@@ -103,7 +101,7 @@ namespace Termoservis.DAL.Repositories
 			// Save changes
 			await this.context.SaveChangesAsync();
 
-			this.logger.Information(
+			this.logger.LogInformation(
 				"Edited country {CountryName} ({CountryId})",
 				countryDb.Name, countryDb.Id);
 
@@ -143,7 +141,7 @@ namespace Termoservis.DAL.Repositories
 
 			try
 			{
-				this.logger.Information("Deleting country {CountryId}...", model.Id);
+				this.logger.LogInformation("Deleting country {CountryId}...", model.Id);
 
 				this.context.Countries.Remove(model);
 				await this.context.SaveChangesAsync();

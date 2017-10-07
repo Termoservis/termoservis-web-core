@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Web.Mvc;
 using Termoservis.Contracts.Models;
 
 namespace Termoservis.Models
@@ -23,7 +22,6 @@ namespace Termoservis.Models
 		/// </value>
 		[Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[HiddenInput(DisplayValue = false)]
 		public long Id { get; set; }
 
 		/// <summary>

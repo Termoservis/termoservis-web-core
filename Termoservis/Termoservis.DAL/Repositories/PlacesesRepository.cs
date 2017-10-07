@@ -2,9 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Termoservis.Common.Extensions;
 using Termoservis.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Termoservis.Libs.Extensions;
 
 namespace Termoservis.DAL.Repositories
 {
@@ -16,26 +17,23 @@ namespace Termoservis.DAL.Repositories
 	public class PlacesRepository : IPlacesRepository
 	{
 		private readonly ApplicationDbContext context;
-		private readonly ILogger logger;
+		private readonly ILogger<PlacesRepository> logger;
 
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="PlacesRepository"/> class.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		/// <param name="loggingService">The logging service.</param>
-		/// <exception cref="ArgumentNullException">
-		/// context
-		/// or
-		/// loggingService
-		/// </exception>
-		public PlacesRepository(ApplicationDbContext context, ILoggingService loggingService)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlacesRepository"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="logger">The logger.</param>
+        /// <exception cref="ArgumentNullException">
+        /// context
+        /// or
+        /// logger
+        /// </exception>
+        public PlacesRepository(ApplicationDbContext context, ILogger<PlacesRepository> logger)
 		{
-			if (context == null)
-				throw new ArgumentNullException(nameof(context));
-
-			this.context = context;
-			this.logger = loggingService?.GetLogger<PlacesRepository>();
+		    this.context = context ?? throw new ArgumentNullException(nameof(context));
+			this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
 
@@ -134,9 +132,7 @@ namespace Termoservis.DAL.Repositories
 			this.context.Places.Add(model);
 			await this.context.SaveChangesAsync();
 
-			this.logger?.Information(
-				"Added new place {PlaceName} ({PlaceId}) to {CountryName} ({CountryId}).", 
-				model.Name, model.Id, model.Country.Name, model.CountryId);
+		    this.logger.LogInformation($"Added new place {model.Name} ({model.Id}) to {model.Country.Name} ({model.CountryId}).");
 
 			return model;
 		}
@@ -175,9 +171,7 @@ namespace Termoservis.DAL.Repositories
 			// Save context changes
 			await this.context.SaveChangesAsync();
 
-			this.logger?.Information(
-				"Edited place {PlaceName} ({PlaceId}) in country ({CountryId}).",
-				placeDb.Name, id, placeDb.CountryId);
+			this.logger.LogInformation($"Edited place {placeDb.Name} ({id}) in country ({placeDb.CountryId}).");
 
 			return placeDb;
 		}
@@ -215,7 +209,7 @@ namespace Termoservis.DAL.Repositories
 
 			try
 			{
-				this.logger?.Information("Deleting place ({PlaceId})...", model.Id);
+				this.logger.LogInformation($"Deleting place ({ model.Id})...");
 
 				this.context.Places.Remove(model);
 				await this.context.SaveChangesAsync();
