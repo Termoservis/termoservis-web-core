@@ -1,6 +1,4 @@
-﻿[
-  //
-  // Style::Global
+[
   {
     "outputFileName": "wwwroot/css/site.min.css",
     "inputFiles": [
@@ -8,8 +6,6 @@
       "wwwroot/lib/**/*.min.css"
     ]
   },
-  //
-  // JS::Global
   {
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
@@ -19,11 +15,8 @@
     "minify": {
       "enabled": true,
       "renameLocals": true
-    },
-    "sourceMap": false
+    }
   },
-  //
-  // JS::Customers/Create
   {
     "outputFileName": "wwwroot/js/customers/create.min.js",
     "inputFiles": [
@@ -32,7 +25,12 @@
     "minify": {
       "enabled": true,
       "renameLocals": true
-    },
-    "sourceMap": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/lib/mprogress/mprogress.min.css",
+    "inputFiles": [
+      "wwwroot/lib/mprogress/mprogress.css"
+    ]
   }
 ]
