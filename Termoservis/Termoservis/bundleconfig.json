@@ -1,0 +1,38 @@
+﻿[
+  //
+  // Style::Global
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css",
+      "wwwroot/lib/**/*.min.css"
+    ]
+  },
+  //
+  // JS::Global
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js",
+      "wwwroot/lib/**/*.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  //
+  // JS::Customers/Create
+  {
+    "outputFileName": "wwwroot/js/customers/create.min.js",
+    "inputFiles": [
+      "wwwroot/js/customers/create.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

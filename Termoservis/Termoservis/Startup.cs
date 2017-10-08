@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols;
 using Termoservis.DAL;
+using Termoservis.Models;
 
 namespace Termoservis
 {
@@ -28,17 +30,19 @@ namespace Termoservis
             // Add database
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Auth
-            services
-                .AddAuthentication("TermoservisCookieAuthenticationScheme")
-                .AddCookie(options =>
-                {
-                    options.AccessDeniedPath = "/Account/Forbidden/";
-                    options.LoginPath = "/Account/Unauthorized/";
-                });
+            // Add Identity
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            // MVC
-            services.AddMvc();
+            // Add MVC
+            services
+                .AddMvc()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AuthorizeFolder("/Account/Manage");
+                    options.Conventions.AuthorizePage("/Account/Logout");
+                });
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -47,6 +51,7 @@ namespace Termoservis
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -54,6 +59,8 @@ namespace Termoservis
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
