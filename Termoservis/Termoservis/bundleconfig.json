@@ -10,7 +10,19 @@
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/site.js",
-      "wwwroot/lib/**/*.min.js"
+      "wwwroot/lib/jquery/*.min.js",
+      "wwwroot/lib/jquery-bathrottle/*.min.js",
+      "wwwroot/lib/jquery-unobtrusive/*.min.js",
+      "wwwroot/lib/jquery-validate/*.min.js",
+      "wwwroot/lib/modernizr/*.min.js",
+      "wwwroot/lib/popper/*.min.js",
+      "wwwroot/lib/bootstrap/*.min.js",
+      "wwwroot/lib/markdown/*.min.js",
+      "wwwroot/lib/moment/*.min.js",
+      "wwwroot/lib/mprogress/*.min.js",
+      "wwwroot/lib/respond/*.min.js",
+      "wwwroot/lib/select2/*.min.js",
+      "wwwroot/lib/tether/*.min.js"
     ],
     "minify": {
       "enabled": true,
