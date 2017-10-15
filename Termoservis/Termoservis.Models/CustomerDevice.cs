@@ -56,7 +56,7 @@ namespace Termoservis.Models
         /// <value>
         /// The work items.
         /// </value>
-        public virtual ICollection<WorkItem> WorkItems { get; set; }
+        public virtual ICollection<WorkItemCustomerDevice> WorkItems { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -79,7 +79,7 @@ namespace Termoservis.Models
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id && string.Equals(Name, other.Name) && string.Equals(Manufacturer, other.Manufacturer) && CommissionDate.Equals(other.CommissionDate);
+            return this.Id == other.Id && string.Equals(this.Name, other.Name) && string.Equals(this.Manufacturer, other.Manufacturer) && this.CommissionDate.Equals(other.CommissionDate);
         }
 
         /// <summary>
@@ -92,10 +92,10 @@ namespace Termoservis.Models
         {
             unchecked
             {
-                var hashCode = Id.GetHashCode();
-                hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Manufacturer != null ? Manufacturer.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ CommissionDate.GetHashCode();
+                var hashCode = this.Id.GetHashCode();
+                hashCode = (hashCode * 397) ^ (this.Name != null ? this.Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (this.Manufacturer != null ? this.Manufacturer.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ this.CommissionDate.GetHashCode();
                 return hashCode;
             }
         }

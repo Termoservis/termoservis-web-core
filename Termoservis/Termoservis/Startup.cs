@@ -28,7 +28,8 @@ namespace Termoservis
         public void ConfigureServices(IServiceCollection services)
         {
             // Add database
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+            // NOTE: As described in "DbContext pooling" for EF Core 2.0
+            services.AddDbContextPool<ApplicationDbContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()

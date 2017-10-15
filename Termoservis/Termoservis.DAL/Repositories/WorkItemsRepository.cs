@@ -116,10 +116,10 @@ namespace Termoservis.DAL.Repositories
             var affectedDevicesToAdd = model.AffectedDevices.Where(newDevice => 
                 !affectedDevicesOld.Contains(newDevice));
             var affectedDevicesToRemove = affectedDevicesOld.Where(oldDevice =>
-                model.AffectedDevices.All(newDevice => oldDevice.Id != newDevice.Id));
+                model.AffectedDevices.All(newDevice => oldDevice.CustomerDeviceId != newDevice.CustomerDeviceId));
             foreach (var newDevice in affectedDevicesToAdd)
                 workItemDb.AffectedDevices.Add(
-                    this.context.CustomerDevices.FirstOrDefault(device => device.Id == newDevice.Id));
+                    this.context.WorkItemCustomerDeviceRelation.FirstOrDefault(device => device.CustomerDeviceId == newDevice.CustomerDeviceId));
             foreach (var customerDevice in affectedDevicesToRemove)
                 workItemDb.AffectedDevices.Remove(customerDevice);
 

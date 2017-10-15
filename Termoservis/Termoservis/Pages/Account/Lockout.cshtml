@@ -1,0 +1,14 @@
+﻿@page
+@model LockoutModel
+@{
+    ViewData["Title"] = "Korisnički račun blokiran";
+}
+
+<header class="pt-3">
+    <div class="alert alert-danger" role="alert">
+        <h1 class="text-danger">@ViewData["Title"]</h1>
+        <p class="text-danger">Ovaj korisnički račun je blokiran zbog uzastopnih pokušaja prijave s neispravnom zaporkom. Molimo, pokušajte ponovno kasnije.</p>
+        <hr/>
+        <p><small>Ukoliko ste sigurni da se radi o zlouporabi, molimo prijavite ovaj slučaj administratoru sustava.</small></p>
+    </div>
+</header>

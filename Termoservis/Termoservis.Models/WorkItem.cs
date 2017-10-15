@@ -107,6 +107,6 @@ namespace Termoservis.Models
         /// The affected devices.
         /// </value>
         [Display(Name = "Uredaji")]
-        public virtual ICollection<CustomerDevice> AffectedDevices { get; set; }
+        public virtual ICollection<WorkItemCustomerDevice> AffectedDevices { get; set; }
     }
 }

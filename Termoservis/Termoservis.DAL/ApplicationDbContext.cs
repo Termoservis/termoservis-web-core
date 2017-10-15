@@ -18,6 +18,15 @@ namespace Termoservis.DAL
         {
         }
 
+	    protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // Configure models
+            // NOTE: As described in "Self-contained type configuration for code first" for EF Core 2.0
+            builder.ApplyConfiguration(new WorkItemCustomerDevice());
+        }
+
         /// <summary>
         /// Gets or sets the addresses.
         /// </summary>
@@ -81,5 +90,7 @@ namespace Termoservis.DAL
         /// The customer devices.
         /// </value>
         public DbSet<CustomerDevice> CustomerDevices { get; set; }
+
+        public DbSet<WorkItemCustomerDevice> WorkItemCustomerDeviceRelation { get; set; }
 	}
 }
