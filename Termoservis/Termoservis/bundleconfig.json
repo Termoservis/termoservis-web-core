@@ -2,8 +2,8 @@
   {
     "outputFileName": "wwwroot/css/site.min.css",
     "inputFiles": [
-      "wwwroot/css/site.css",
-      "wwwroot/lib/**/*.min.css"
+      "wwwroot/lib/**/*.min.css",
+      "wwwroot/css/site.css"
     ]
   },
   {
@@ -22,7 +22,8 @@
       "wwwroot/lib/mprogress/*.min.js",
       "wwwroot/lib/respond/*.min.js",
       "wwwroot/lib/select2/*.min.js",
-      "wwwroot/lib/tether/*.min.js"
+      "wwwroot/lib/tether/*.min.js",
+      "wwwroot/lib/datatable/dataTables.min.js"
     ],
     "minify": {
       "enabled": true,
@@ -38,11 +39,5 @@
       "enabled": true,
       "renameLocals": true
     }
-  },
-  {
-    "outputFileName": "wwwroot/lib/mprogress/mprogress.min.css",
-    "inputFiles": [
-      "wwwroot/lib/mprogress/mprogress.css"
-    ]
   }
 ]

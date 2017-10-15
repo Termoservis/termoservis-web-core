@@ -1,0 +1,116 @@
+﻿@page
+@model Termoservis.Pages.Customers.CreateModel
+@{
+    ViewData["Title"] = "Kreiraj korisnika";
+    Layout = "~/Pages/_Layout.cshtml";
+}
+
+<page-header />
+
+@Html.Partial("_CustomerFormPartial", Model)
+
+@section scripts
+{
+    <script>
+        // Croatian
+        function character (n) {
+            var message = ' ' + n + ' znak';
+
+            if (n % 10 < 5 && n % 10 > 0 && (n % 100 < 5 || n % 100 > 19)) {
+                if (n % 10 > 1) {
+                    message += 'a';
+                }
+            } else {
+                message += 'ova';
+            }
+
+            return message;
+        }
+
+        $(".select2-init").each(function() {
+            $(this).select2({
+                ajax: {
+                    method: 'POST',
+                    url: '/api/places',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    delay: 250,
+                    data: function(params) {
+                        return JSON.stringify(params);
+                    },
+                    processResults: function(data, params) {
+                        params.page = params.page || 1;
+                        return {
+                            results: data.items,
+                            pagination: {
+                                more: data.items.length >= 30
+                            }
+                        }
+                    },
+                    cache: true
+                },
+                language: {
+                    errorLoading: function () {
+                        return 'Preuzimanje nije uspjelo.';
+                    },
+                    inputTooLong: function (args) {
+                        var overChars = args.input.length - args.maximum;
+
+                        return 'Unesite ' + character(overChars);
+                    },
+                    inputTooShort: function (args) {
+                        var remainingChars = args.minimum - args.input.length;
+
+                        return 'Unesite još ' + character(remainingChars);
+                    },
+                    loadingMore: function () {
+                        return 'Učitavanje rezultata…';
+                    },
+                    maximumSelected: function (args) {
+                        return 'Maksimalan broj odabranih stavki je ' + args.maximum;
+                    },
+                    noResults: function () {
+                        return 'Nema rezultata';
+                    },
+                    searching: function () {
+                        return 'Pretraga…';
+                    }
+                },
+                minimumInputLength: 1
+            });
+            $(this).next('.select2').find('.select2-selection').one('focus', select2Focus).on('blur',
+                function() {
+                    $(this).one('focus', select2Focus);
+                });
+
+            function select2Focus() {
+                $(this).closest('.select2').prev('select').select2('open');
+            }
+        });
+
+        function addNestedForm(container, counter, ticks, content) {
+            var nextIndex = $(counter).length;
+            var pattern = new RegExp(ticks, "gi");
+            content = content.replace(pattern, nextIndex);
+            $(container).append(content);
+        }
+
+        $(document).ready(function () {
+            $("#telephoneNumbersAdd").click(function() {
+                var childrenCount = $("#telephoneNumbers").children().length;
+                var template =
+                    $(
+                        "<div class='form-group row telephoneNumber'><div class='col'><input name='Input.TelephoneNumbers[" +
+                        childrenCount +
+                        "].Number' id='Input_TelephoneNumbers_" +
+                        childrenCount +
+                        "__Number' type='text' class='form-control' value='' /><input name='Input.TelephoneNumbers[" +
+                        childrenCount +
+                        "].SearchKeywords' id='Input.TelephoneNumbers_" +
+                        childrenCount +
+                        "__SearchKeywords' type='hidden' value='' data-val-required='The SearchKeywords field is required.' data-val='true'></div></div>");
+                $("#telephoneNumbers").append(template);
+            });
+        });
+    </script>
+}

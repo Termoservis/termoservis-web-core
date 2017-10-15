@@ -1,0 +1,73 @@
+﻿@page
+@model Termoservis.Pages.Customers.IndexModel
+@{
+    ViewData["Title"] = "Korisnici";
+    Layout = "~/Pages/_Layout.cshtml";
+}
+
+<page-header />
+
+<!--  Actions  -->
+<div class="row">
+    <div class="col pb-3">
+        <a asp-page="/Customers/Create" class="btn btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span>&nbsp;Dodaj korisnika</span>
+        </a>
+    </div>
+</div>
+
+<!--  Table  -->
+<div class="row">
+    <table class="table table-hover table-bordered" id="customers-table">
+        <thead class="thead-default">
+            <tr>
+                <th>Naziv</th>
+                <th>Ulica i kućni broj</th>
+                <th>Datum zadnjih radova</th>
+                <th>Bilješka</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Initialize data table
+            $('#customers-table').DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'f><'col-sm-12 col-md-6 small'l>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5 small'i><'col-sm-12 col-md-7'p>>",
+                ordering: false,
+                stateSave: true,
+                language: {
+                    "lengthMenu": "Prikaži _MENU_ korisnika po stranici",
+                    "zeroRecords": "Nema korisnika koji odgovara zadanim parametrima pretrage",
+                    "info": "Prikazana stranica _PAGE_ od _PAGES_",
+                    "infoEmpty": "Nema dostupnih zapisa",
+                    "infoFiltered": "(od _MAX_ ukupno)",
+                    "loadingRecords": "Učitavanje...",
+                    "processing":     "Obrada...",
+                    "search": "",
+                    "paginate": {
+                        "first":      "Prva",
+                        "last":       "Zadnja",
+                        "next":       "Sljedeća",
+                        "previous":   "Prijašnja"
+                    }
+                }
+            });
+
+            // Hide `length` on mobile
+            // Show placeholder instead of label
+            // Show search icon left of filter input
+            var inputElement = $("input.form-control[type='search']");
+            var lengthElement = $(".dataTables_length");
+            inputElement.attr("placeholder", "Parametri pretrage...");
+            lengthElement.addClass("d-sm-none d-md-block");
+            inputElement.before($("<span class='input-group-addon'><i class='fa fa-search'></i></span>"));
+            $(inputElement.parent()).attr("class", "input-group");
+        });
+    </script>
+}

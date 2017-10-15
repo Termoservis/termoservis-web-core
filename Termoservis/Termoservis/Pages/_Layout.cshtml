@@ -48,10 +48,12 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a asp-page="/Index" class="navbar-brand">
-            <img src="/images/Termoservis.png" alt="TERMOSERVIS" width="185" height="28"/>
+            <img src="/images/Termoservis.png" class="brand-logo" alt="TERMOSERVIS" width="158" height="24"/>
         </a>
         <div class="collapse navbar-collapse" id="navbarMainToggler">
             <div class="navbar-nav mr-auto">
+                <a asp-page="/Index" page-name-active="true" class="nav-item nav-link">Početna</a>
+                <a asp-page="/Customers/Index" page-name-active="true" class="nav-item nav-link">Korisnici</a>
                 @*@Html.MenuLink("Početna", "Index", "Home", new { @class = "nav-item nav-link" }, true)
                 @Html.MenuLink("Korisnici", "Index", "Customers", new { @class = "nav-item nav-link" }, true)*@
             </div>

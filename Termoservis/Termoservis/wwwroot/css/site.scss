@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 59px;
+    padding-top: 57px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -24,6 +24,20 @@ textarea {
     font-weight: normal;
 }
 
+.h1, h1 {
+    font-size: 2.25rem;
+    font-weight: lighter;
+}
+
+.h2, h2 {
+    font-size: 1.95rem;
+    font-weight: lighter;
+}
+
+.h3, h3 {
+    font-size: 1.75rem;
+}
+
 th {
     font-weight: normal;
 }
@@ -34,4 +48,40 @@ th {
 
 .navbar {
     border-bottom: 1px solid #DADADA;
+
+    .brand-logo {
+        margin-top: -7px;
+    }
 }
+
+div.dataTables_filter {
+    text-align: left;
+
+    input {
+        margin-left: 0 !important;
+    }
+}
+
+div.dataTables_length {
+    text-align: right;
+}
+
+.input-group-addon, .form-control {
+    border-radius: 0;
+}
+
+.select2-selection {
+    padding: 3px 0;
+    height: 38px !important;
+    border-radius: 0 !important;
+    border: 1px solid rgba(0,0,0,.15) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+}
+
+.select2-dropdown {
+    border: 1px solid rgba(0,0,0,.15) !important;
+}
+

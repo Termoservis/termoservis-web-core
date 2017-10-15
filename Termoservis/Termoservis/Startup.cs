@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols;
+using Swashbuckle.AspNetCore.Swagger;
 using Termoservis.DAL;
+using Termoservis.DAL.Repositories;
 using Termoservis.Models;
 
 namespace Termoservis
@@ -44,8 +46,19 @@ namespace Termoservis
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
                 });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Termoservis API", Version = "v1" });
+            });
+
+            // Register repositories
+            services.AddTransient<ICountriesRepository, CountriesRepository>();
+            services.AddTransient<IPlacesRepository, PlacesRepository>();
+
+            // Register services
         }
-        
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -62,6 +75,13 @@ namespace Termoservis
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Termoservis API V1");
+            });
+
 
             app.UseMvc(routes =>
             {
